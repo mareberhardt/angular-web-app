@@ -1,29 +1,52 @@
-<div style="padding: 13px;">
-  <mat-spinner *ngIf="products.length === 0"></mat-spinner>
-  <mat-grid-list cols="4" rowHeight="400px">
-    <mat-grid-tile [colspan]="1" [rowspan]="1" *ngFor="let product of products">
-      <mat-card style="margin-top:10px;">
-        <mat-card-header>
-          <mat-card-title>{{product.name}}</mat-card-title>
-          <mat-card-subtitle> {{product.price | currency}} / {{product.quantity}}
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-              {{product.description}}
-          </p>
-          <img class="image" src="{{ product.imageUrl }}" />
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button> Buy product</button>
-        </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div class="home-page">
+  <mat-spinner style="margin:0 auto;" *ngIf="products.length === 0"></mat-spinner>
+  <div class="sort-field-toggle">
+    <label>Sorting Field: </label>
+    <mat-button-toggle-group name="sortField"
+                             aria-label="Font Style"
+                             (change)="reset()"
+                             #toggleGroup>
+      <mat-button-toggle class="mat-flat-button mat-primary"
+                         value="name"
+                         (change)="sortProducts($event.value)">Name
+      </mat-button-toggle>
+      <mat-button-toggle class="mat-flat-button mat-primary"
+                         value="price"
+                         (change)="sortProducts($event.value)">Price
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div class="card-list"
+       fxLayout="row wrap"
+       fxLayout.lt-sm="column"
+       fxLayoutGap="16px"
+       fxLayoutAlign="start start">
+    <mat-card *ngFor="let product of products"
+              fxFlex="0 1 calc(25% - 16px)"
+              fxFlex.lt-md="0 1 calc(50% - 16px)"
+              fxFlex.lt-sm="100%">
+      <mat-card-header>
+        <mat-card-title>{{product.name}}</mat-card-title>
+        <mat-card-subtitle> {{product.price | currency}} / {{product.quantity}}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+            {{product.description}}
+        </p>
+        <img mat-card-image
+             class="image"
+             src="{{ product.imageUrl }}"/>
+      </mat-card-content>
+      <mat-card-actions>
+        <button class="mat-flat-button mat-primary" mat-button> Buy product</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>
-<div>
-  <button (click) ="firstPage()" mat-button> First</button>
-  <button (click) ="previousPage()" mat-button> Previous</button>
-  <button (click) ="nextPage()" mat-button> Next</button>
-  <button (click) ="lastPage()" mat-button> Last</button>
+<div class="pagination-buttons">
+  <button (click) ="firstPage()" mat-raised-button color="primary" mat-button> First</button>
+  <button (click) ="previousPage()" mat-raised-button color="primary" mat-button> Previous</button>
+  <button (click) ="nextPage()" mat-raised-button color="primary" mat-button> Next</button>
+  <button (click) ="lastPage()" mat-raised-button color="primary" mat-button> Last</button>
 </div>
